@@ -14,13 +14,16 @@
         </tr>
     </thead>
     <tbody>
-        {% if mascotas %}
-        {%for mascota in mascotas %}
+        <!--Cuando hacemos vistas basadas en clase devuelve los resusltados en object_list -->
+        <!--{-% if mascotas %-}
+        {-%for mascota in mascotas %-}-->
+        {% if object_list %}
+        {% for mascota in object_list %}
         <tr>
             <td>{{mascota.id}}</td>
             <td>{{mascota.nombre}}</td>
             <td>{{mascota.sexo}}</td>
-            <td>{{mascota.edad}}</td>
+            <td>{{mascota.edad_aproximada}}</td>
             <td>{{mascota.fecha_rescate}}</td>
             <td>{{mascota.persona.nombre}} {{mascota.persona.apellidos}}</td>
             <td>

@@ -1,5 +1,9 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
+from django.urls import reverse_lazy
+from django.views.generic import CreateView
+from django.views.generic import ListView
+
 from apps.mascota.forms import MascotaForm
 from apps.mascota.models import Mascota
 
@@ -12,7 +16,7 @@ def mascota_view(request):
         form=MascotaForm(request.POST)
         if form.is_valid():
             form.save()
-        return redirect('mascota:index')
+        return redirect('mascota:mascota_listar')
     else:
         form=MascotaForm()
     return render(request,'mascota/mascota_form.html',{'form':form})
@@ -20,7 +24,7 @@ def mascota_view(request):
 def mascota_list(request):
     mascota=Mascota.objects.all()
     contexto={'mascotas':mascota}
-    return render(request,'mascota/mascota_list.html',contexto)
+    return render(request,'mascota/mascota_listar.html',contexto)
 
 def mascota_edit(request,id_mascota):
     mascota=Mascota.objects.get(id=id_mascota)
@@ -39,4 +43,14 @@ def mascota_delete(request,id_mascota):
         mascota.delete()
         return redirect('mascota:mascota_listar')
     return render(request,'mascota/mascota_delete.html',{'mascota':mascota})
+
+class MascotaList(ListView):
+    model = Mascota
+    template_name = 'mascota/mascota_list.html'
+
+class MascotaCreate(CreateView):
+    model = Mascota
+    form_class = MascotaForm
+    template_name = 'mascota/mascota_form.html'
+    success_url = reverse_lazy('mascota:mascota_listar')
 
