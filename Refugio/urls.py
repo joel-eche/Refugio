@@ -23,6 +23,7 @@ urlpatterns = [
     url(r'^mascota/', include('apps.mascota.urls',namespace="mascota")),
     url(r'^adopcion/', include('apps.adopcion.urls',namespace="adopcion")),
     url(r'^usuario/',include('apps.usuario.urls',namespace='usuario')),
+    url(r'^$',login,{'template_name':'index.html'},name='login'),
     url(r'^accounts/login/',login,{'template_name':'index.html'},name='login'),
     url(r'^logout/',logout_then_login,name='logout'),
     url(r'^reset/password_reset$',password_reset,{'template_name':'registration/password_reset_form.html','email_template_name':'registration/password_reset_email.html'},name='password_reset'),
